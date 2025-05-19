@@ -1,20 +1,31 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Extract token from URL
-    const path = window.location.pathname;
-    const pathParts = path.split('/');
+    // First, check if a token was stored in sessionStorage from the URL path handler
+    let token = sessionStorage.getItem('resetToken');
     
-    // The token should be the last part of the URL when using /reset/{token} format
-    if (pathParts.length > 0) {
-        const token = pathParts[pathParts.length - 1];
+    // If no token was found in sessionStorage, try to extract it from the URL
+    if (!token) {
+        const path = window.location.pathname;
+        const pathParts = path.split('/');
         
-        // Check if the token looks valid (not empty and not just "reset")
-        if (token && token !== '' && token !== 'reset') {
-            console.log('Reset token:', token);
-        } else if (pathParts.length > 1 && pathParts[pathParts.length - 2] === 'reset') {
-            // Handle case where URL ends with a trailing slash
-            const token = pathParts[pathParts.length - 2];
-            console.log('Reset token:', token);
+        // The token should be the last part of the URL when using /reset/{token} format
+        if (pathParts.length > 0) {
+            token = pathParts[pathParts.length - 1];
+            
+            // Check if the token looks valid (not empty and not just "reset")
+            if (!(token && token !== '' && token !== 'reset')) {
+                if (pathParts.length > 1 && pathParts[pathParts.length - 2] === 'reset') {
+                    // Handle case where URL ends with a trailing slash
+                    token = pathParts[pathParts.length - 2];
+                } else {
+                    token = null;
+                }
+            }
         }
+    }
+    
+    // Log the token if we found one
+    if (token) {
+        console.log('Reset token:', token);
     }
     
     // Add click event listener to all links in the document

@@ -5,6 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Password Reset</title>
     <link rel="stylesheet" href="styles.css">
+    <script>
+        // Handle reset URL path pattern
+        window.onload = function() {
+            const path = window.location.pathname;
+            if (path.startsWith('/reset/')) {
+                // Extract token from URL path
+                const pathParts = path.split('/');
+                if (pathParts.length >= 3) {
+                    const token = pathParts[2]; // The token is the third part of the path
+                    if (token && token !== '') {
+                        console.log('Reset token from URL path:', token);
+                        // Store token in sessionStorage for use after page load
+                        sessionStorage.setItem('resetToken', token);
+                    }
+                }
+            }
+        };
+    </script>
 </head>
 <body>
     <div class="container">
