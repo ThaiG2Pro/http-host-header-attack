@@ -1,0 +1,8 @@
+{
+  "routes": [
+    {
+      "src": "/reset/.*",
+      "dest": "/index.html"
+    }
+  ]
+}
