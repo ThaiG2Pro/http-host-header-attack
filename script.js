@@ -16,22 +16,49 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log('Reset token:', token);
         }
     }
+    
+    // Add click event listener to all links in the document
+    document.addEventListener('click', function(event) {
+        // Check if the clicked element is a link or has a parent link
+        let targetElement = event.target;
+        while (targetElement && targetElement !== document) {
+            if (targetElement.tagName === 'A') {
+                const href = targetElement.href;
+                
+                // Check if it matches our target URL pattern
+                if (href && href.includes('https://http-host-header-attack.onrender.com/reset/')) {
+                    // Extract the token from the URL
+                    const urlParts = href.split('/');
+                    const token = urlParts[urlParts.length - 1];
+                    
+                    // Log token to console
+                    if (token && token !== '') {
+                        console.log('Clicked reset token:', token);
+                    }
+                }
+                break;
+            }
+            targetElement = targetElement.parentElement;
+        }
+    });
 
     // Form submission handling
     const resetForm = document.getElementById('reset-form');
-    resetForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        const newPassword = document.getElementById('new-password').value;
-        const confirmPassword = document.getElementById('confirm-password').value;
-        
-        if (newPassword !== confirmPassword) {
-            alert('Passwords do not match!');
-            return;
-        }
-        
-        // Here you would normally make an API call to update the password
-        // using the token and new password
-        alert('Password reset successfully!');
-    });
+    if (resetForm) {
+        resetForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const newPassword = document.getElementById('new-password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+            
+            if (newPassword !== confirmPassword) {
+                alert('Passwords do not match!');
+                return;
+            }
+            
+            // Here you would normally make an API call to update the password
+            // using the token and new password
+            alert('Password reset successfully!');
+        });
+    }
 });
