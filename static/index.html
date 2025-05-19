@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Reset</title>
+    <link rel="stylesheet" href="/styles.css">
+    <script>
+        // Handle reset URL path pattern
+        window.onload = function() {
+            const path = window.location.pathname;
+            if (path.startsWith('/reset/')) {
+                // Extract token from URL path
+                const pathParts = path.split('/');
+                if (pathParts.length >= 3) {
+                    const token = pathParts[2]; // The token is the third part of the path
+                    if (token && token !== '') {
+                        console.log('Reset token from URL path:', token);
+                        // Store token in sessionStorage for use after page load
+                        sessionStorage.setItem('resetToken', token);
+                    }
+                }
+            }
+        };
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="reset-form">
+            <h1>Reset Your Password</h1>
+            <p>You've requested to reset your password. Please enter your new password below.</p>
+            <form id="reset-form">
+                <div class="form-group">
+                    <label for="new-password">New Password</label>
+                    <input type="password" id="new-password" name="new-password" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirm-password">Confirm Password</label>
+                    <input type="password" id="confirm-password" name="confirm-password" required>
+                </div>
+                <button type="submit" class="reset-btn">Reset Password</button>
+            </form>
+        </div>
+    </div>
+    <script src="/script.js"></script>
+</body>
+</html>
