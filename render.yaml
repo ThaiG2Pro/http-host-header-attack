@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: http-host-header-attack
+    buildCommand: null  # No build step for static sites
+    staticPublishPath: ./  # Publish all files in this directory
+    envVars:
+      - key: NODE_VERSION
+        value: 18.x  # Use a modern Node.js version
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html

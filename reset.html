@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Reset</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="reset-form">
+            <h1>Reset Your Password</h1>
+            <p>You've requested to reset your password. Please enter your new password below.</p>
+            <form id="reset-form">
+                <div class="form-group">
+                    <label for="new-password">New Password</label>
+                    <input type="password" id="new-password" name="new-password" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirm-password">Confirm Password</label>
+                    <input type="password" id="confirm-password" name="confirm-password" required>
+                </div>
+                <button type="submit" class="reset-btn">Reset Password</button>
+            </form>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Extract token from URL
+            const fullUrl = window.location.href;
+            const urlParts = fullUrl.split('/');
+            const token = urlParts[urlParts.length - 1];
+            
+            // Check if we have a valid token and log it
+            if (token && token !== '' && token !== 'reset.html') {
+                console.log('Reset token:', token);
+            }
+            
+            // Form submission handling
+            const resetForm = document.getElementById('reset-form');
+            if (resetForm) {
+                resetForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const newPassword = document.getElementById('new-password').value;
+                    const confirmPassword = document.getElementById('confirm-password').value;
+                    
+                    if (newPassword !== confirmPassword) {
+                        alert('Passwords do not match!');
+                        return;
+                    }
+                    
+                    // Log the token when form is submitted
+                    console.log('Using token for password reset:', token);
+                    
+                    // Here you would normally make an API call to update the password
+                    // using the token and new password
+                    alert('Password reset successfully!');
+                });
+            }
+        });
+    </script>
+</body>
+</html>
