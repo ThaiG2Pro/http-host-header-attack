@@ -26,13 +26,12 @@
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Extract token from URL
-            const fullUrl = window.location.href;
-            const urlParts = fullUrl.split('/');
-            const token = urlParts[urlParts.length - 1];
+            // Extract token from URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const token = urlParams.get('token');
             
             // Check if we have a valid token and log it
-            if (token && token !== '' && token !== 'reset.html') {
+            if (token && token !== '') {
                 console.log('Reset token:', token);
             }
             
